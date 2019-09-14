@@ -1,0 +1,17 @@
+echo "# Colin" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/cstipcak/Colin.git
+git push -u origin master
+
+
+import numpy as np                  #import numpy
+import matplotlib.pyplot as plt     #import matplotlib
+x=np.linspace(0,6,50)               #create x
+xlist = np.sin(x)                   
+ylist = np.tan(x)
+plt.plot(xlist) 
+plt.plot(ylist)
+plt.title('Cos and Sin')            #Add title
+plt.show()                          #Show plot
