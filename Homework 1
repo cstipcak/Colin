@@ -1,0 +1,35 @@
+#import packages
+import requests
+import re
+
+#create lists
+he=[]
+she=[]
+
+#create seperate regex for female and male characters
+regex_he = r"'s ([A-Za-z].+)\bShe\b"
+regex_she = r"She([A-Z\a-z '-]+)\bThey fight\b"
+
+#create loop for male characters
+for i in range(0,50):
+    test_str=requests.get('https://theyfightcrime.org') #call website
+    sentence=str(test_str.content) 			#make call string
+    matches = re.search(regex_he, sentence)		#find matching sentence
+    he_line=matches.group(0)				#call specific matching group
+    he_line=he_line[:-4][2:]				#remove loose ends of regex
+    he.append(he_line)					#append to list
+    with open("he.txt","w") as filehandle:		#write to text file
+    for listitem in he:
+        filehandle.write('%s\n' % listitem)
+
+#create loop for male characters
+for i in range(0,50):
+    test_str = requests.get('https://theyfightcrime.org')#call website
+    sentence = str(test_str.content)			 #make call string
+    matches = re.search(regex_she, sentence)		 #find matching sentence
+    she_line = matches.group(0)				 #call specific matching group
+    she_line = she_line[:-11][6:]			 #remove loose ends of regex
+    she.append(she_line)				 #append to list
+    with open("she.txt", "w") as filehandle:		 #write to text file
+        for listitem in she:
+            filehandle.write('%s\n' % listitem)
