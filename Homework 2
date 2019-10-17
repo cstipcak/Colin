@@ -1,0 +1,115 @@
+import glob
+
+read_files = glob.glob(r"C:\Users\colin.stipcak\Documents\Stevens\595\Characters\He\*.txt")
+
+with open("result_he.txt", "wb") as outfile:
+    for f in read_files:
+        with open(f, "rb") as infile:
+            outfile.write(infile.read())
+
+read_files = glob.glob(r"C:\Users\colin.stipcak\Documents\Stevens\595\Characters\he\*.txt")
+
+with open("result_she.txt", "wb") as outfile:
+    for f in read_files:
+        with open(f, "rb") as infile:
+            outfile.write(infile.read())
+
+import numpy as np
+import pandas as pd
+
+col_names=['Characters']
+male_data = pd.read_csv('result_he.txt', sep="/n", header=None, names=col_names, skipinitialspace=True)
+male_data=male_data.replace(to_replace='[0-9:.]+', value = '', regex=True)
+male_data['Characters'] = male_data['Characters'].str.strip()
+male_data['Characters'] =  male_data['Characters'].apply(lambda row:"He's "+ row if row.startswith('a') else row)
+print(male_data.to_string())
+
+from textblob import TextBlob
+
+male_data['Sentiment']=male_data.apply(lambda x: TextBlob(x['Characters']).sentiment.polarity, axis=1)
+
+print(male_data.nlargest(10,'Sentiment'))
+print(male_data.nsmallest(10,'Sentiment'))
+
+#String
+f = open('result_he.txt', 'r')
+he_data=f.read()
+
+#Clean String
+import re
+he_data_clean = re.sub('[:.0-9]+', '', he_data)
+
+#Count descriptors
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.collocations import BigramCollocationFinder, TrigramCollocationFinder
+from nltk.util import ngrams
+
+# run files to count bigrams
+he_words = [word.casefold() for sentence in sent_tokenize(he_data_clean)
+         for word in word_tokenize(sentence)]
+he_words_fd = nltk.FreqDist(he_words)
+he_bigram_fd = nltk.FreqDist(nltk.bigrams(he_words))
+he_finder = BigramCollocationFinder(he_words_fd, he_bigram_fd)
+he_bigram_measures = nltk.collocations.BigramAssocMeasures()
+print(he_finder.nbest(he_bigram_measures.pmi, 10))
+print(he_finder.score_ngrams(he_bigram_measures.pmi))
+
+
+#She data
+import glob
+
+read_files = glob.glob(r"C:\Users\colin.stipcak\Documents\Stevens\595\Characters\She\*.txt")
+
+with open("result_She.txt", "wb") as outfile:
+    for f in read_files:
+        with open(f, "rb") as infile:
+            outfile.write(infile.read())
+
+read_files = glob.glob(r"C:\Users\colin.stipcak\Documents\Stevens\595\Characters\She\*.txt")
+
+with open("result_she.txt", "wb") as outfile:
+    for f in read_files:
+        with open(f, "rb") as infile:
+            outfile.write(infile.read())
+
+import numpy as np
+import pandas as pd
+
+col_names=['Characters']
+female_data = pd.read_csv('result_she.txt', sep="/n", header=None, names=col_names, skipinitialspace=True)
+female_data=female_data.replace(to_replace='[0-9:.]+', value = '', regex=True)
+female_data['Characters'] = female_data['Characters'].str.strip()
+female_data['Characters'] =  female_data['Characters'].apply(lambda row:"She's "+ row if row.startswith('a') else row)
+print(female_data.to_string())
+
+from textblob import TextBlob
+
+female_data['Sentiment']=female_data.apply(lambda x: TextBlob(x['Characters']).sentiment.polarity, axis=1)
+
+print(female_data.nlargest(10,'Sentiment'))
+print(female_data.nsmallest(10,'Sentiment'))
+
+#String
+f = open('result_she.txt', 'r')
+she_data=f.read()
+
+#Clean String
+import re
+she_data_clean = re.sub('[:.0-9]+', '', she_data)
+
+#Count descriptors
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.collocations import BigramCollocationFinder, TrigramCollocationFinder
+from nltk.util import ngrams
+
+# run files to count bigrams
+she_words = [word.casefold() for sentence in sent_tokenize(she_data_clean)
+         for word in word_tokenize(sentence)]
+she_words_fd = nltk.FreqDist(she_words)
+she_bigram_fd = nltk.FreqDist(nltk.bigrams(she_words))
+she_finder = BigramCollocationFinder(she_words_fd, she_bigram_fd)
+she_bigram_measures = nltk.collocations.BigramAssocMeasures()
+print(she_finder.nbest(she_bigram_measures.pmi, 10))
+print(she_finder.score_ngrams(she_bigram_measures.pmi))
