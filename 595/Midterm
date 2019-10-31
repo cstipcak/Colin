@@ -1,0 +1,17 @@
+from flask import Flask
+from textblob import TextBlob
+from variables import PoS_dict
+
+app = Flask(__name__)
+
+@app.route("/noun_phrase_frequencies/<string:input_text>", methods=["GET"])
+def wiki.noun_phrases.count(input_text):
+    return str(TextBlob(input_text)).noun_phrases.count
+
+@app.route("/translate/<string:input_text>", methods=["GET"])
+def TextBlob(input_text):
+    return str(TextBlob(input_text)).translate(to='es')
+
+@app.route("/language/<string:input_text>", methods=["GET"])
+def TextBlob(input_text):
+    return str(TextBlob(input_text)).detect_language()
