@@ -9,9 +9,9 @@ def wiki.noun_phrases.count(input_text):
     return str(TextBlob(input_text)).noun_phrases.count
 
 @app.route("/translate/<string:input_text>", methods=["GET"])
-def TextBlob(input_text):
+def translate(input_text):
     return str(TextBlob(input_text)).translate(to='es')
 
 @app.route("/language/<string:input_text>", methods=["GET"])
-def TextBlob(input_text):
+def detect_language(input_text):
     return str(TextBlob(input_text)).detect_language()
