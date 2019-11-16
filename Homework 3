@@ -50,7 +50,7 @@ print(centers)
 
 new_labels3 = km3.labels_
 new_labels5 = km5.labels_
-# Plot the identified clusters and compare with the answers
+
 fig, axes = plt.subplots(1, 2, figsize=(16,8))
 axes[0].scatter(X[:, 0], X[:, 1], c=new_labels3, cmap='gist_rainbow',
 edgecolor='k', s=150)
